@@ -42,5 +42,7 @@ router.get('/manicurista/favorita/:email', favoritasController.getFavoritaManicu
 //Rutas de Cambio de estado
 router.put('/cambioDeEstado', EstadoDeCitaController.cambioEstado);
 router.get('/citas/:id_cita', EstadoDeCitaController.obtenerCita);
+router.get('/citasUsuario', EstadoDeCitaController.obtenerCitasUsuario);
+
 
 module.exports = router;

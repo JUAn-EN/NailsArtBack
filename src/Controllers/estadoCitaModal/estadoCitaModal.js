@@ -61,3 +61,31 @@ exports.obtenerCita = async (req, res) => {
         return res.status(500).json({ message: "Error interno del servidor", error: error.message });
     }
 };
+exports.obtenerCitasUsuario = async (req, res) => {
+    try {
+        console.log('Iniciando consulta de citas del usuario...');
+
+        const { id_usuario } = req.user;
+
+        const selectQuery = `
+            SELECT *
+            FROM citas
+            WHERE id_usuario = ?
+        `;
+
+        const [citas] = await pool.promise().query(selectQuery, [id_usuario]);
+
+        if (citas.length === 0) {
+            return res.status(404).json({ message: "No se encontraron citas para este usuario" });
+        }
+
+        console.log('Citas del usuario consultadas correctamente');
+
+        return res.status(200).json({ citas });
+
+    } catch (error) {
+        console.error('Error en el controlador de consulta de citas del usuario:', error);
+
+        return res.status(500).json({ message: "Error interno del servidor", error: error.message });
+    }
+};
